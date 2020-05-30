@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ScoresController < ApplicationController
   def index
     @scores = Score.all.order(score: :desc)
@@ -6,8 +8,11 @@ class ScoresController < ApplicationController
 
   def create
     @score = Score.new(score_params)
-    if @score.save
+    begin
+      @score.save!
       render json: @score
+    rescue => exception
+      render json: exception, status: :unprocessable_entity
     end
   end
 
