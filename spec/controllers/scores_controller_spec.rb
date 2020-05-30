@@ -18,4 +18,15 @@ RSpec.describe ScoresController, type: :controller do
   end
 
 
+  it 'POST /scores submits a score' do
+    post :create, params: {
+      name: "Dave",
+      score: 100
+    }
+
+    json = JSON.parse(response.body)
+
+    expect(json['score']).to eq 100
+    expect(json['name']).to eq "Dave"
+  end
 end
