@@ -29,4 +29,13 @@ RSpec.describe ScoresController, type: :controller do
     expect(json['score']).to eq 100
     expect(json['name']).to eq "Dave"
   end
+
+  it 'POST /scores with bad data returns 500' do
+    post :create, params: {
+      wrong: "uhoh"
+    }
+
+    expect(response).to have_http_status(:unprocessable_entity)
+end
+
 end
